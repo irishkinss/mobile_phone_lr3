@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 import java.util.Scanner;
 
 public class PhoneProxy implements IPhone{

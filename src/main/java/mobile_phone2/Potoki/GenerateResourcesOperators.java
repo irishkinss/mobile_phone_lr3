@@ -7,11 +7,10 @@ import mobile_phone2.MobilePhone.WaitingState;
 import java.util.Random;
 import java.util.Vector;
 
-public class GenerateResources extends Thread{
+public class GenerateResourcesOperators extends Thread{
     private Vector<Operator> operators = new Vector<>();
     private CallCenter callCenter;
 
-    //private Vector<Operator> operators;
     private double balance = 100000000;
     private double callProbability = 1;
     private IPhoneState state = new WaitingState();
@@ -22,10 +21,24 @@ public class GenerateResources extends Thread{
             "Samsung",
             "iPhone"
     };
-    public GenerateResources() {
+    public GenerateResourcesOperators() {
     }
 
+    public Vector<Operator> getOperators() {
+        return operators;
+    }
 
+    public void setOperators(Vector<Operator> operators) {
+        this.operators = operators;
+    }
+
+    public CallCenter getCallCenter() {
+        return callCenter;
+    }
+
+    public void setCallCenter(CallCenter callCenter) {
+        this.callCenter = callCenter;
+    }
 
     // Метод для генерации случайного номера телефона
     public static String generatePhoneNumber() {
@@ -54,6 +67,9 @@ public class GenerateResources extends Thread{
         // Случайным образом выбрать один из брендов телефонов
         return PHONE_BRANDS[random.nextInt(PHONE_BRANDS.length)];
     }
+    public void addOperator(Operator operator){
+        operators.add(operator);
+    }
 
     public void run(){
         while(true) {
@@ -62,7 +78,9 @@ public class GenerateResources extends Thread{
             };
             Phone phone = new Phone(generatePhoneNumber(),balance, callProbability, state, generatePhoneBrand());
             Operator operator = new Operator(phone, callCenter);
+            addOperator(operator);
         }
+
     }
 
 

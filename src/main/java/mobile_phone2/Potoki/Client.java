@@ -1,10 +1,15 @@
 package mobile_phone2.Potoki;
 
-public class Clients extends Thread{
-    final Operator operator;
+public class Client extends Thread{
+    final CallCenter callCenter;
+   // private int id;
 
-    public Clients(Operator operator) {
-        this.operator = operator;
-
+    public Client(CallCenter callCenter) {
+        this.callCenter = callCenter;
     }
+    @Override
+    public void run() {
+        callCenter.clientArrived(this);
+    }
+
 }

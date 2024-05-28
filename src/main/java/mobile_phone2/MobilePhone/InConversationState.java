@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 public class InConversationState implements IPhoneState{ // в разговоре
     private Phone phone;

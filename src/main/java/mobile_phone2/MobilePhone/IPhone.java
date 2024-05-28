@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 public interface IPhone {
     void call();// позвонить

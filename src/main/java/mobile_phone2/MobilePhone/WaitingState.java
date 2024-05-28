@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 public class WaitingState implements IPhoneState{ //ожидание
     private Phone phone;

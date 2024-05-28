@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 public class BlockedState implements IPhoneState{   //заблокирован
         private Phone phone;

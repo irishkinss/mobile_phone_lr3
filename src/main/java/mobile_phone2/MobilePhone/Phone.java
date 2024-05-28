@@ -1,7 +1,5 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
-import java.lang.System;
-import java.lang.String;
 import java.util.Objects;
 
 public class Phone implements IPhone{

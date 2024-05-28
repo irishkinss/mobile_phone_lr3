@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 // Класс хранителя, который отвечает за хранение и предоставление снимков состояния телефона
 public class PhoneCareTaker {

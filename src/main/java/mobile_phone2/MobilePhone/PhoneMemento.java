@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 //Класс снимка, содержащий состояние телефона
 public class PhoneMemento {

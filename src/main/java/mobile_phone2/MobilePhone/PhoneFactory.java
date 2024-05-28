@@ -1,4 +1,4 @@
-package MobilePhone;
+package mobile_phone2.MobilePhone;
 
 // Фабрика для создания телефонов разных брендов
 public class PhoneFactory {
