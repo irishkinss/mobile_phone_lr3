@@ -2,22 +2,30 @@ package mobile_phone2.Potoki;
 
 import mobile_phone2.MobilePhone.Phone;
 
-public class Operator extends Thread{
+public class Operator extends Thread {
     private Phone phone;
     final CallCenter callCenter;
+    private final int id;
 
-    public void setPhoneOperator(Phone phone){
-        this.phone = phone;
-    }
-
-    public Operator(Phone phone, CallCenter callCenter) {
+    public Operator(Phone phone, CallCenter callCenter, int id) {
         this.phone = phone;
         this.callCenter = callCenter;
+        this.id = id;
     }
+
+    public int getOperatorId() {
+        return id;
+    }
+
     @Override
     public void run() {
-        while (true){
-            callCenter.doOperatorWork();
+        while (!Thread.currentThread().isInterrupted()) {
+            if (callCenter != null) {
+                callCenter.doOperatorWork(this);
+            } else {
+                System.err.println("CallCenter is null for operator " + id);
+                break;
+            }
         }
     }
 }
