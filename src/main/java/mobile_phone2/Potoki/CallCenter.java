@@ -33,6 +33,7 @@ public class CallCenter {
         try {
             if (clients.size() < operators.size()) {
                 clients.add(client);
+                System.out.println("Клиент " + client.getId() + " добавлен в очередь обслуживания.");
                 operatorAvailable.signal();
             } else if (waitingLines.size() < MAX_WAITING_LINES) {
                 System.out.println("Клиент " + client.getId() + " в очереди под номером " + waitingLines.size());
@@ -45,7 +46,7 @@ public class CallCenter {
         }
     }
 
-    public Client getNextClient() {
+    private Client getNextClient() {
         lock.lock();
         try {
             while (clients.isEmpty()) {
@@ -64,16 +65,6 @@ public class CallCenter {
 
     public void doOperatorWork(Operator operator) {
         while (!Thread.currentThread().isInterrupted()) {
-            lock.lock();
-            try {
-                if (!waitingLines.isEmpty() && clients.size() < operators.size()) {
-                    clients.add(waitingLines.poll());
-                    operatorAvailable.signal();
-                }
-            } finally {
-                lock.unlock();
-            }
-
             Client client = getNextClient();
             if (client != null) {
                 System.out.println("Оператор " + operator.getOperatorId() + " обслуживает клиента " + client.getId());
@@ -84,6 +75,29 @@ public class CallCenter {
                     return;
                 }
                 System.out.println("Клиент " + client.getId() + " ушел");
+
+                lock.lock();
+                try {
+                    if (!waitingLines.isEmpty() && clients.size() < operators.size()) {
+                        Client nextClient = waitingLines.poll();
+                        clients.add(nextClient);
+                        System.out.println("Клиент " + nextClient.getId() + " перемещен из очереди ожидания в основную очередь обслуживания.");
+                        operatorAvailable.signal();
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                System.out.println("Оператор " + operator.getOperatorId() + " засыпает");
+                try {
+                    lock.lock();
+                    operatorAvailable.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                } finally {
+                    lock.unlock();
+                }
             }
         }
     }
